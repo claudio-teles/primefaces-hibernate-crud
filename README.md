@@ -1,7 +1,9 @@
 # primefaces-hibernate-crud
-Projeto Java EE feito com Wildfly, PrimeFaces e Hibernate
+# Projeto Java EE feito com Wildfly, PrimeFaces e Hibernate
 
-#Cadastro De Clientes Com PrimeFaces Sem SQL E Com Estrutura De Dados.
+# Cadastro De Clientes Com PrimeFaces Com Hibernate 5.45.
+
+# Altere o nome de usuário e a senha do arquivo hibernate.cfg.xml que está na pasta src, caso contrário haverá erros no banco de dados MariaDB.
 
 ![Create](./gifs/create_hibernate.gif)<br />
 ![Read](./gifs/read_cpf_hibernate.gif)<br />
