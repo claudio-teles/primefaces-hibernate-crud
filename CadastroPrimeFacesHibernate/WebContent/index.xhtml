@@ -1,0 +1,141 @@
+<!DOCTYPE html> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
+
+	<h:head>
+		<title>Cadastro de Pacientes</title>
+	</h:head> 
+	<h:body>
+	
+	<img src="img/primefaces-logo.png" width="50%" />
+	<img src="img/Hibernate-logo.png" />
+	
+	<br />
+	
+	<div id="div_01">
+		<h:form id="formulario-1">
+		
+			<p:panel id="painel-1" header="Cadastrar Pacientes">
+				<p:messages id="mensagens-1" />
+				<p:panelGrid columns="2" id="painel-grid-1">
+					<p:outputLabel value="Nome" />
+					<p:inputText id="nome" value="#{cadastroBean.pessoaBean.nome}" title="Digite seu nome!" size="50" required="true" requiredMessage="Falta seu nome!" />
+					<p:outputLabel value="CPF" />
+					<p:inputMask mask="999.999.999-99" id="cpf" value="#{cadastroBean.pessoaBean.cpf}" size="50" title="Digite seu CPF aqui!"  required="true" requiredMessage="Falta o CPF!" />
+					<p:outputLabel value="E-mail" />
+					<p:inputText id="email"  size="50" value="#{cadastroBean.pessoaBean.email}" title="Digite seu e-mail aqui!" required="true" requiredMessage="Falta o E-mail!" />
+					<p:outputLabel value="Médico" />
+					<p:inputText id="medico"  size="50" value="#{cadastroBean.pessoaBean.medico}" title="Digite o nome do Médico!"  required="true" requiredMessage="Falta o nome do médico!" />
+					<p:outputLabel for="data-atendimento" value="Atendimento"/>
+					<p:calendar id="data-atendimento" value="#{cadastroBean.pessoaBean.atendimento}"  size="50" />
+				</p:panelGrid>
+			</p:panel>
+			<p:commandButton value="Cadastrar" action="#{cadastroBean.salvar()}" icon="ui-icon-circle-check" update="tabela-2"/>
+	
+		</h:form>
+		
+		<br />
+		<br />
+		
+		<h:form id="formulario-2" style="width: 95%;">
+			<p:panel id="painel-2" style="width: 70%;">
+				<p:messages id="mensagens-2"/>
+				<p:panelGrid columns="3" id="painel-grid-2">
+					<p:outputLabel value="Pesquisar por CPF"/>
+					<p:inputMask mask="999.999.999-99" value="#{cadastroBean.pacienteCPF.cpf}" id="pesq_cpf"/>
+					<p:commandButton value="Pesquisar" action="#{cadastroBean.obterPacientePorCPF(cadastroBean.pacienteCPF.cpf)}" icon="ui-icon-search" update="tabela-1"/>
+				</p:panelGrid>
+			</p:panel>
+		</h:form>
+		
+		<br />
+		
+		<p:panel header="Resultado da Pesquisa por CPF">
+			<p:dataTable id="tabela-1" value="#{cadastroBean.listaPacAtual}" var="pesquisa_paciente" resizableColumns="true" liveResize="true" resizeMode="expand">
+				<p:column headerText="Nº">
+					<p:outputLabel value="#{pesquisa_paciente.id}"/>
+				</p:column>
+				<p:column headerText="Nome">
+					<p:outputLabel value="#{pesquisa_paciente.nome}"/>
+				</p:column>
+				<p:column headerText="CPF">
+					<p:outputLabel value="#{pesquisa_paciente.cpf}"/>
+				</p:column>
+				<p:column headerText="E-mail">
+					<p:outputLabel value="#{pesquisa_paciente.email}"/>
+				</p:column>
+				<p:column headerText="Médico">
+					<p:outputLabel value="#{pesquisa_paciente.medico}"/>
+				</p:column>
+				<p:column headerText="Atendimento">
+					<p:outputLabel value="#{pesquisa_paciente.dataDeAtendimento}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:outputLabel>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+		
+		<br />
+		<br />
+		
+		<p:panel header="Tabela de Pacientes">
+			<p:dataTable id="tabela-2" value="#{cadastroBean.obterTodosPacientes()}" var="p" resizableColumns="true" liveResize="true" resizeMode="expand">
+				<p:column headerText="Nº">
+					<p:outputLabel value="#{p.id}" />
+				</p:column>
+				<p:column headerText="Nome">
+					<p:outputLabel value="#{p.nome}" />
+				</p:column>
+				<p:column headerText="CPF">
+					<p:outputLabel value="#{p.cpf}" />
+				</p:column>
+				<p:column headerText="E-mail">
+					<p:outputLabel value="#{p.email}" />
+				</p:column>
+				<p:column headerText="Médico">
+					<p:outputLabel value="#{p.medico}" />
+				</p:column>
+				<p:column headerText="Atendimento">
+					<p:outputLabel value="#{p.dataDeAtendimento}">
+						<f:convertDateTime pattern="dd/MM/yyyy" />
+					</p:outputLabel>
+				</p:column>
+				<p:column headerText="Atualizar">
+					<p:commandButton value="#{p.id}" icon="ui-icon-arrowrefresh-1-e" type="button" onclick="PF('dialogo').show();" />
+					<p:dialog  header="Atualizar dados do Paciente" widgetVar="dialogo" width="1000" height="300">
+						<h:form id="formulario-up">
+					
+							<p:panel id="painel" header="Atualizar Pacientes" >
+								<p:messages id="mensagens-5" />
+								<p:panelGrid columns="2" id="painel-grid">
+									<p:outputLabel value="Nome" />
+									<p:inputText id="_nome" value="#{cadastroBean.atualizaBean.nome}" title="Digite seu nome!" size="50" required="true" requiredMessage="Falta seu nome!" />
+									<p:outputLabel value="CPF" />
+									<p:inputMask mask="999.999.999-99" id="_cpf" value="#{cadastroBean.atualizaBean.cpf}" size="50" title="Digite seu CPF aqui!"  required="true" requiredMessage="Falta o CPF!" />
+									<p:outputLabel value="E-mail" />
+									<p:inputText id="_email"  size="50" value="#{cadastroBean.atualizaBean.email}" title="Digite seu e-mail aqui!" required="true" requiredMessage="Falta o E-mail!" />
+									<p:outputLabel value="Médico" />
+									<p:inputText id="_medico"  size="50" value="#{cadastroBean.atualizaBean.medico}" title="Digite o nome do Médico!"  required="true" requiredMessage="Falta o nome do médico!" />
+									<p:outputLabel for="_data-atendimento" value="Atendimento"/>
+									<p:calendar id="_data-atendimento" value="#{cadastroBean.atualizaBean.atendimento}"  size="50" />
+								</p:panelGrid>
+							</p:panel>
+							<p:commandButton value="Atualizar" action="#{cadastroBean.atualizarPacientePorId(p.id)}" icon="ui-icon-pencil" update="tabela-2"/>
+				
+						</h:form>
+					</p:dialog>
+				</p:column>
+				<p:column headerText="Deletar">
+					<p:commandButton value="#{p.id}" action="#{cadastroBean.deletarPacientePorId(p.id)}" icon="ui-icon-close" update="tabela-2"/>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+		
+		<br />
+	</div>
+	
+</h:body> 
+</html>
