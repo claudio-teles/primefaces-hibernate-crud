@@ -1,5 +1,5 @@
 # primefaces-hibernate-crud
-# Projeto Java EE feito com Wildfly, PrimeFaces e Hibernate
+# Projeto Java EE feito com TomCat, PrimeFaces e Hibernate
 
 # Cadastro De Clientes Com PrimeFaces Com Hibernate 5.45.
 
